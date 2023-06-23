@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 
 export var wallet = null;
 
-const setWallet = (_wallet) => {
+export const setWallet = (_wallet) => {
   wallet = _wallet;
   localStorage.setItem("13x54r_keyPair", JSON.stringify(_wallet));
 };
@@ -55,7 +55,7 @@ export default function WelcomePage() {
 
   return (
     <div>
-      <h1>Welcome - Wallet by 13x54r</h1>
+      <h1>Welcome - Wallet by 13x54r 🙏</h1>
       {walletStatus === "" && (
         <>
           <button onClick={() => handleWalletStatus("import")}>
