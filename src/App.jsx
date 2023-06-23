@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import WelcomePage from "./pages/WelcomePage";
+import Dashboard from "./pages/Dashboard";
 
-function App() {
-  const [count, setCount] = useState(0)
+const keyPairExists = () => {
+  // @note totally not secure on revealing the key for the key pair store & storing on local storage - 13x54r
+  if (localStorage.getItem("13x54r_keyPair") && localStorage.getItem('13x54r_walletPassword')) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: keyPairExists() ? <Dashboard /> : <WelcomePage />,
+  },
+  {
+    path: "/dashboard",
+    element: keyPairExists() ? <Dashboard /> : <WelcomePage />,
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App
