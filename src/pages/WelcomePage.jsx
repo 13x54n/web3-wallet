@@ -4,8 +4,7 @@ import { ethers } from "ethers";
 export var wallet = null;
 
 export const setWallet = (_wallet) => {
-  wallet = _wallet;
-  localStorage.setItem("13x54r_keyPair", JSON.stringify(_wallet));
+  localStorage.setItem("13x54r_keyPair", JSON.stringify({..._wallet, privateKey: _wallet.privateKey}));
 };
 
 export default function WelcomePage() {
@@ -26,6 +25,7 @@ export default function WelcomePage() {
     if (_type === "privateKey") {
       const _wallet = new ethers.Wallet(privateKey);
       setWallet(_wallet);
+      setWalletStatus("password");
     } else if (_type === "mnemonic") {
       const _wallet = ethers.HDNodeWallet.fromPhrase(mnemonic);
 
@@ -34,6 +34,7 @@ export default function WelcomePage() {
       // const thirdAccount = _wallet.derivePath(`m/44'/60'/0'/0/2`);
 
       setWallet(_wallet);
+      setWalletStatus("password");
     }
   };
 
